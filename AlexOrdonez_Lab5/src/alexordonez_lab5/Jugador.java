@@ -86,7 +86,7 @@ public class Jugador {
 
     @Override
     public String toString() {
-        return nombre + "(" +posicion+ ")";
+        return nombre + "(" +"precio="+ precio+" posicion="+ posicion+" disponibilidad=" +disponibilidad+")";
     }
 
 }
