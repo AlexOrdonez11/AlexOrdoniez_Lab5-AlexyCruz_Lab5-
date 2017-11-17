@@ -712,7 +712,7 @@ public class Main extends javax.swing.JFrame {
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         DefaultListModel lj = (DefaultListModel) jl_jugadores.getModel();
         DefaultListModel le = (DefaultListModel) jl_equipos.getModel();
-        if (((Jugador) lj.getElementAt(jl_jugadores.getSelectedIndex())).getPrecio() > ((Equipo) le.getElementAt(jl_equipos.getSelectedIndex())).getPresupuesto()) {
+        //if (((Jugador) lj.getElementAt(jl_jugadores.getSelectedIndex())).getPrecio() > ((Equipo) le.getElementAt(jl_equipos.getSelectedIndex())).getPresupuesto()) {
             ((Equipo) le.getElementAt(jl_equipos.getSelectedIndex())).getJugadores().
                     add(((Jugador) lj.getElementAt(jl_jugadores.getSelectedIndex())));
             ((Jugador) lj.getElementAt(jl_jugadores.getSelectedIndex())).setDisponibilidad(false);
@@ -731,9 +731,9 @@ public class Main extends javax.swing.JFrame {
             }
 
             mt.reload();
-        }else{
-            JOptionPane.showMessageDialog(this, "No se pudo Comprar");
-        }
+        //}else{
+          //  JOptionPane.showMessageDialog(this, "No se pudo Comprar");
+        //}
 
     }//GEN-LAST:event_jButton3MouseClicked
 
@@ -754,6 +754,7 @@ public class Main extends javax.swing.JFrame {
         jugador_seleccionado.setDisponibilidad(true);
         j.remove(nodo_seleccionado);
         equipo_seleccionado.getJugadores().remove(jugador_seleccionado);
+        model.reload();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
