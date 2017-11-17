@@ -69,7 +69,7 @@ public class Equipo {
 
     @Override
     public String toString() {
-        return  nombre+" copas="+copas;
+        return  nombre+"  copas = "+copas;
     }
     
 }

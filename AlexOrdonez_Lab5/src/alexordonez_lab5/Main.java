@@ -7,6 +7,9 @@ package alexordonez_lab5;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -30,6 +33,9 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menu_pp = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
@@ -96,8 +102,24 @@ public class Main extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        jt_listar = new javax.swing.JTree();
         jLabel1 = new javax.swing.JLabel();
+
+        jMenuItem1.setText("sacar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menu_pp.add(jMenuItem1);
+
+        jMenuItem2.setText("datos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menu_pp.add(jMenuItem2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -188,19 +210,19 @@ public class Main extends javax.swing.JFrame {
         });
 
         try {
-            ff_hab_jua.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
+            ff_hab_jua.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
         try {
-            ff_tec_jua.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
+            ff_tec_jua.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
         try {
-            ff_res_jua.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
+            ff_res_jua.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -399,19 +421,19 @@ public class Main extends javax.swing.JFrame {
         });
 
         try {
-            ff_hab_jum.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
+            ff_hab_jum.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
         try {
-            ff_tec_jum.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
+            ff_tec_jum.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
         try {
-            ff_res_jum.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
+            ff_res_jum.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -541,9 +563,14 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Comprar jugadores", jPanel2);
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("ll");
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jScrollPane3.setViewportView(jTree1);
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("La Liga");
+        jt_listar.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jt_listar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jt_listarMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jt_listar);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -594,89 +621,144 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        int num=jl_jugadores_mod.getSelectedIndex();
-        DefaultListModel lj=(DefaultListModel) jl_jugadores_mod.getModel();
-        Jugador x=(Jugador)lj.get(num);
+        int num = jl_jugadores_mod.getSelectedIndex();
+        DefaultListModel lj = (DefaultListModel) jl_jugadores_mod.getModel();
+        Jugador x = (Jugador) lj.get(num);
         x.setHabilidad(Integer.parseInt(ff_hab_jum.getText()));
         x.setNombre(tf_nom_jum.getText());
-        x.setPosicion((String)cb_pos_jum.getSelectedItem());
+        x.setPosicion((String) cb_pos_jum.getSelectedItem());
         x.setPrecio(Double.parseDouble(tf_pre_jum.getText()));
         x.setResistencia(Integer.parseInt(ff_res_jum.getText()));
         x.setTecnica(Integer.parseInt(ff_tec_jum.getText()));
         jl_jugadores_mod.setModel(lj);
+        DefaultTreeModel mt = (DefaultTreeModel) jt_listar.getModel();
+        mt.reload();
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
-        int num=jl_equipos_mod.getSelectedIndex();
-        DefaultListModel le=(DefaultListModel) jl_equipos_mod.getModel();
-        Equipo x=(Equipo)le.get(num);
+        int num = jl_equipos_mod.getSelectedIndex();
+        DefaultListModel le = (DefaultListModel) jl_equipos_mod.getModel();
+        Equipo x = (Equipo) le.get(num);
         x.setNombre(tf_nom_eqm.getText());
         x.setEstadio(tf_est_eqm.getText());
         x.setPresupuesto(Double.parseDouble(tf_pre_eqm.getText()));
-        x.setCopas((Integer)sp_copas_eqm.getValue());
+        x.setCopas((Integer) sp_copas_eqm.getValue());
         jl_equipos_mod.setModel(le);
+        DefaultTreeModel mt = (DefaultTreeModel) jt_listar.getModel();
+        mt.reload();
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        String nombre=tf_nom_jua.getText();
-        String posicion=(String)cb_pos_jua.getSelectedItem();
-        double precio=Double.parseDouble(tf_pre_jua.getText());
-        int habilidad=Integer.parseInt(ff_hab_jua.getText());
-        int tecnica=Integer.parseInt(ff_tec_jua.getText());
-        int resistencia=Integer.parseInt(ff_res_jua.getText());
-        DefaultListModel model=(DefaultListModel) jl_jugadores.getModel();
-        Jugador x=new Jugador(nombre,posicion,precio,true,habilidad,tecnica,resistencia);
+        String nombre = tf_nom_jua.getText();
+        String posicion = (String) cb_pos_jua.getSelectedItem();
+        double precio = Double.parseDouble(tf_pre_jua.getText());
+        int habilidad = Integer.parseInt(ff_hab_jua.getText());
+        int tecnica = Integer.parseInt(ff_tec_jua.getText());
+        int resistencia = Integer.parseInt(ff_res_jua.getText());
+        DefaultListModel model = (DefaultListModel) jl_jugadores.getModel();
+        Jugador x = new Jugador(nombre, posicion, precio, true, habilidad, tecnica, resistencia);
         model.addElement(x);
         jl_jugadores.setModel(model);
-        DefaultListModel m=(DefaultListModel)jl_jugadores_mod.getModel();
+        DefaultListModel m = (DefaultListModel) jl_jugadores_mod.getModel();
         m.addElement(x);
         jl_jugadores_mod.setModel(m);
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        String nombre=tf_nom_eqa.getText();
-        String estadio=tf_est_eqa.getText();
-        double presupuesto=Double.parseDouble(tf_pre_eqa.getText());
-        int copas=(Integer)sp_copas_eqa.getValue();
-        DefaultListModel model=(DefaultListModel) jl_equipos.getModel();
-        Equipo x=new Equipo( nombre, estadio, presupuesto, copas);
+        String nombre = tf_nom_eqa.getText();
+        String estadio = tf_est_eqa.getText();
+        double presupuesto = Double.parseDouble(tf_pre_eqa.getText());
+        int copas = (Integer) sp_copas_eqa.getValue();
+        DefaultListModel model = (DefaultListModel) jl_equipos.getModel();
+        Equipo x = new Equipo(nombre, estadio, presupuesto, copas);
         model.addElement(x);
         jl_equipos.setModel(model);
-        DefaultListModel m=(DefaultListModel)jl_equipos_mod.getModel();
+        DefaultListModel m = (DefaultListModel) jl_equipos_mod.getModel();
         m.addElement(x);
         jl_equipos_mod.setModel(m);
+        DefaultTreeModel mt = (DefaultTreeModel) jt_listar.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) mt.getRoot();
+        DefaultMutableTreeNode h = new DefaultMutableTreeNode(x);
+        raiz.add(h);
+        mt.reload();
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
-        int num=jl_equipos_mod.getSelectedIndex();
-        DefaultListModel le=(DefaultListModel) jl_equipos_mod.getModel();
-        Equipo x=(Equipo)le.get(num);
+        int num = jl_equipos_mod.getSelectedIndex();
+        DefaultListModel le = (DefaultListModel) jl_equipos_mod.getModel();
+        Equipo x = (Equipo) le.get(num);
         le.removeElement(x);
         jl_equipos_mod.setModel(le);
-        le=(DefaultListModel)jl_equipos.getModel();
+        le = (DefaultListModel) jl_equipos.getModel();
         le.removeElement(x);
         jl_equipos.setModel(le);
+        DefaultTreeModel mt = (DefaultTreeModel) jt_listar.getModel();
+        mt.reload();
     }//GEN-LAST:event_jButton7MouseClicked
 
     private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
-        int num=jl_jugadores_mod.getSelectedIndex();
-        DefaultListModel lj=(DefaultListModel) jl_jugadores_mod.getModel();
-        Jugador x=(Jugador)lj.get(num);
+        int num = jl_jugadores_mod.getSelectedIndex();
+        DefaultListModel lj = (DefaultListModel) jl_jugadores_mod.getModel();
+        Jugador x = (Jugador) lj.get(num);
         lj.removeElement(x);
         jl_jugadores_mod.setModel(lj);
-        lj=(DefaultListModel)jl_jugadores.getModel();
+        lj = (DefaultListModel) jl_jugadores.getModel();
         lj.removeElement(x);
         jl_jugadores.setModel(lj);
+        DefaultTreeModel mt = (DefaultTreeModel) jt_listar.getModel();
+        mt.reload();
     }//GEN-LAST:event_jButton6MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        DefaultListModel lj=(DefaultListModel) jl_jugadores.getModel();
-        DefaultListModel le=(DefaultListModel) jl_equipos.getModel();
-        ((Equipo)le.getElementAt(jl_equipos.getSelectedIndex())).getJugadores().
-                add(((Jugador)lj.getElementAt(jl_jugadores.getSelectedIndex())));
-        ((Jugador)lj.getElementAt(jl_jugadores.getSelectedIndex())).setDisponibilidad(false);
-        lj.removeElement(lj.getElementAt(jl_jugadores.getSelectedIndex()));
+        DefaultListModel lj = (DefaultListModel) jl_jugadores.getModel();
+        DefaultListModel le = (DefaultListModel) jl_equipos.getModel();
+        if (((Jugador) lj.getElementAt(jl_jugadores.getSelectedIndex())).getPrecio() > ((Equipo) le.getElementAt(jl_equipos.getSelectedIndex())).getPresupuesto()) {
+            ((Equipo) le.getElementAt(jl_equipos.getSelectedIndex())).getJugadores().
+                    add(((Jugador) lj.getElementAt(jl_jugadores.getSelectedIndex())));
+            ((Jugador) lj.getElementAt(jl_jugadores.getSelectedIndex())).setDisponibilidad(false);
+            Jugador x = (Jugador) lj.get(jl_jugadores.getSelectedIndex());
+            lj.removeElement(lj.getElementAt(jl_jugadores.getSelectedIndex()));
+            DefaultTreeModel mt = (DefaultTreeModel) jt_listar.getModel();
+            DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) mt.getRoot();
+            DefaultMutableTreeNode equipo = new DefaultMutableTreeNode(le.get(jl_equipos.getSelectedIndex()));
+            DefaultMutableTreeNode y = new DefaultMutableTreeNode(x);
+            for (int i = 0; i < raiz.getChildCount(); i++) {
+                System.out.println("q");
+                if (raiz.getChildAt(i).toString().equals(equipo.toString())) {
+                    System.out.println("f");
+                    ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(y);
+                }
+            }
+
+            mt.reload();
+        }else{
+            JOptionPane.showMessageDialog(this, "No se pudo Comprar");
+        }
+
     }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jt_listarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_listarMouseClicked
+        Object v1 = jt_listar.getSelectionPath().getLastPathComponent();
+        nodo_seleccionado = (DefaultMutableTreeNode) v1;
+        if (nodo_seleccionado.getUserObject() instanceof Jugador) {
+            jugador_seleccionado = (Jugador) nodo_seleccionado.getUserObject();
+            menu_pp.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jt_listarMouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        DefaultTreeModel model=(DefaultTreeModel)jt_listar.getModel();
+        DefaultMutableTreeNode m=(DefaultMutableTreeNode)model.getRoot();
+        DefaultMutableTreeNode j=(DefaultMutableTreeNode)nodo_seleccionado.getParent();
+        equipo_seleccionado=(Equipo)j.getUserObject();
+        jugador_seleccionado.setDisponibilidad(true);
+        j.remove(nodo_seleccionado);
+        equipo_seleccionado.getJugadores().remove(jugador_seleccionado);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JOptionPane.showMessageDialog(this, jugador_seleccionado);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -750,6 +832,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -765,11 +849,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTree jTree1;
     private javax.swing.JList<String> jl_equipos;
     private javax.swing.JList<String> jl_equipos_mod;
     private javax.swing.JList<String> jl_jugadores;
     private javax.swing.JList<String> jl_jugadores_mod;
+    private javax.swing.JTree jt_listar;
+    private javax.swing.JPopupMenu menu_pp;
     private javax.swing.JSpinner sp_copas_eqa;
     private javax.swing.JSpinner sp_copas_eqm;
     private javax.swing.JTextField tf_est_eqa;
@@ -783,4 +868,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField tf_pre_jua;
     private javax.swing.JTextField tf_pre_jum;
     // End of variables declaration//GEN-END:variables
+    DefaultMutableTreeNode nodo_seleccionado;
+    Jugador jugador_seleccionado;
+    Equipo equipo_seleccionado;
 }
